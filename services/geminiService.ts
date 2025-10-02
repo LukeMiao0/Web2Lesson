@@ -1,13 +1,21 @@
+// FIX: Add declaration for `process` to satisfy TypeScript in a browser environment.
+// The `process.env.API_KEY` variable is injected at build time by Vite.
+declare const process: {
+  env: {
+    API_KEY: string;
+  }
+};
+
 import { GoogleGenAI, Type } from "@google/genai";
 import { type LessonData, type QuizQuestion, type VocabularyItem } from '../types';
 
 // Helper function to get the AI client, with the check inside.
 const getAiClient = () => {
-    // For security, Vite requires environment variables exposed to the browser to be prefixed with VITE_.
-    // This key will be configured in your deployment platform's settings (e.g., Netlify, Vercel).
-    const apiKey = import.meta.env.VITE_API_KEY;
+    // FIX: Use `process.env.API_KEY` to adhere to coding guidelines, resolving the original TypeScript error.
+    const apiKey = process.env.API_KEY;
     if (!apiKey) {
-        throw new Error("Configuration error: VITE_API_KEY is not set. The application cannot connect to the generative AI service. Please set this environment variable in your deployment settings.");
+        // FIX: Updated error message for clarity.
+        throw new Error("Configuration error: API_KEY is not configured. Please set the VITE_API_KEY environment variable.");
     }
     return new GoogleGenAI({ apiKey: apiKey });
 };
