@@ -1,0 +1,35 @@
+.rich-text-editor {
+  min-height: 16rem; /* h-64 */
+  max-height: 60vh;
+  overflow-y: auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #393E46;
+  border-width: 2px;
+  border-color: #4B5563;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  line-height: 1.6;
+}
+
+.rich-text-editor:focus {
+  outline: none;
+  border-color: #00ADB5;
+  box-shadow: 0 0 0 1px #00ADB5;
+}
+
+/* 
+  Use a pseudo-element for the placeholder, as contentEditable divs
+  don't support the placeholder attribute.
+*/
+.rich-text-editor:empty::before {
+  content: attr(data-placeholder);
+  color: #9CA3AF; /* gray-400 */
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
